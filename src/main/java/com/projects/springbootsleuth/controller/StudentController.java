@@ -26,19 +26,17 @@ public class StudentController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 	
 	@GetMapping
-	public ResponseEntity<?> getStudents() {
+	public ResponseEntity<?> getStudents(HttpHeaders httpHeaders) {
 		
 		LOGGER.info("Retrieving student details(sleuth service) ----- ");
 		
-		List<StudentResponse> studentResponseList = null;
-		HttpHeaders headers =new HttpHeaders();
 		String traceId = MDC.get("X-B3-TraceId");
-		headers.set("traceId", traceId);
+		httpHeaders.set("traceId", traceId);
 
-		studentResponseList = studentService.getStudents();
+		List<StudentResponse> studentResponseList = studentService.getStudents();
 
 		LOGGER.info("Retrieved student details(sleuth service) ----- ");
 		
-		return new ResponseEntity<>(studentResponseList,headers,HttpStatus.OK);
+		return new ResponseEntity<>(studentResponseList,httpHeaders,HttpStatus.OK);
 	}
 }
