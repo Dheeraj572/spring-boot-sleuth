@@ -1,5 +1,6 @@
 package com.projects.springbootsleuth.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,12 +32,8 @@ public class StudentService implements IStudentService{
 		ResponseEntity<List<StudentResponse>> response = restTemplate.exchange("http://localhost:5000/students",
 				HttpMethod.GET, null, studentParameterizedTypeList);
 
-		Optional<List<StudentResponse>> map = Optional.ofNullable(response).map(mapper -> mapper.getBody());
-		List<StudentResponse> studentResponseList = null;
+		List<StudentResponse> studentResponseList = Optional.ofNullable(response).map(mapper -> mapper.getBody()).orElse(new ArrayList<>());
 
-		if (map.isPresent()) {
-			studentResponseList = map.get();
-		}
 		LOGGER.info("Retrieved student details in sleuth service -------");
 		return studentResponseList;
 	}
