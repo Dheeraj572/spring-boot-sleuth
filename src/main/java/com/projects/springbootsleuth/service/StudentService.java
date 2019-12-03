@@ -29,7 +29,7 @@ public class StudentService implements IStudentService{
 	public List<StudentResponse> getStudents() {
 
 		LOGGER.info("Retrieving student details in sleuth service -------");
-		ResponseEntity<List<StudentResponse>> response = restTemplate.exchange("http://localhost:5000/students",
+		ResponseEntity<List<StudentResponse>> response = restTemplate.exchange("http://springboot-dockerized-application/students",
 				HttpMethod.GET, null, studentParameterizedTypeList);
 
 		List<StudentResponse> studentResponseList = Optional.ofNullable(response).map(mapper -> mapper.getBody()).orElse(new ArrayList<>());
