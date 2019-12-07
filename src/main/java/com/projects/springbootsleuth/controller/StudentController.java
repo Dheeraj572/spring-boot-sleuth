@@ -14,23 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projects.springbootsleuth.service.IStudentService;
 import com.projects.springbootsleuth.util.StudentResponse;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping(value="students")
+@Slf4j
 public class StudentController {
 
 	@Autowired
 	private IStudentService studentService;
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
-	
 	@GetMapping
 	public ResponseEntity<?> getStudents() {
 		
-		LOGGER.info("Retrieving student details(sleuth service) ----- ");
+		log.info("Retrieving student details(sleuth service) ----- ");
 
 		List<StudentResponse> studentResponseList = studentService.getStudents();
 
-		LOGGER.info("Retrieved student details(sleuth service) ----- ");
+		log.info("Retrieved student details(sleuth service) ----- ");
 		
 		return new ResponseEntity<>(studentResponseList,HttpStatus.OK);
 	}
